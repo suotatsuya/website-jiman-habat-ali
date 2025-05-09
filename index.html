@@ -390,7 +390,7 @@
                         <p class="text-gray-600">Jam Buka: Senin-Sabtu 08.00-00.00, Minggu 08.00-00.00</p>
                     </div>
                     
-                    <button id="confirm-delivery" class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-semibold transition hidden">
+                    <button id="confirm-delivery" class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-semibold transition">
                         Lanjut ke Pembayaran
                     </button>
                 </div>
@@ -448,7 +448,7 @@
                             <p class="text-gray-600 text-sm">Pembayaran akan diverifikasi secara otomatis dalam 1-5 menit setelah transfer.</p>
                         </div>
                         <div id="ewallet-instruction" class="hidden">
-                            <p class="text-gray-600 mb-4">gunakan nomor tujuan:</p>
+                            <p class="text-gray-600 mb-4">Gunakan nomor tujuan:</p>
                             <div class="bg-gray-50 p-4 rounded-lg mb-4 text-center">
                                 <p class="text-gray-600" id="ewallet-number">0882005220908</p>
                                 <p class="text-gray-600" id="ewallet-name">Herbal Sehat Official</p>
@@ -458,13 +458,14 @@
                         <div id="qris-instruction" class="hidden">
                             <p class="text-gray-600 mb-4">Silakan scan QR code berikut untuk pembayaran:</p>
                             <div class="bg-gray-50 p-4 rounded-lg mb-4 text-center">
-                                <p class="text-gray-600 mt-2" id="qris-amount">coming Soon</p>
+                               <!-- <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://herbalsehat.com/payment" alt="QR Code" class="mx-auto"> -->
+                                <p class="text-gray-600 mt-2" id="qris-amount">Jumlah: Rp0</p>
                             </div>
                             <p class="text-gray-600 text-sm">Pembayaran akan diverifikasi secara otomatis dalam 1-2 menit setelah scan.</p>
                         </div>
                     </div>
                     
-                    <button id="confirm-payment" class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-semibold transition hidden">
+                    <button id="confirm-payment" class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-semibold transition">
                         Konfirmasi Pembayaran
                     </button>
                 </div>
@@ -683,7 +684,7 @@
                         pickupInfo.classList.add('hidden');
                     }
                     
-                    // Show confirm button
+                    // Always show confirm button for delivery method
                     confirmDeliveryButton.classList.remove('hidden');
                 });
             });
@@ -723,7 +724,6 @@
                         document.getElementById('bank-name').textContent = bank.name;
                         document.getElementById('account-number').textContent = bank.number;
                         document.getElementById('account-name').textContent = bank.accountName;
-                        document.getElementById('transfer-amount').textContent = `Jumlah: ${cartTotal.textContent}`;
                     } 
                     else if (selectedPaymentMethod === 'gopay' || selectedPaymentMethod === 'dana') {
                         ewalletInstruction.classList.remove('hidden');
@@ -732,14 +732,13 @@
                         const ewallet = ewalletDetails[selectedPaymentMethod];
                         document.getElementById('ewallet-number').textContent = ewallet.number;
                         document.getElementById('ewallet-name').textContent = ewallet.accountName;
-                        document.getElementById('ewallet-amount').textContent = `Jumlah: ${cartTotal.textContent}`;
                     }
                     else if (selectedPaymentMethod === 'qris') {
                         qrisInstruction.classList.remove('hidden');
-                        document.getElementById('qris-amount').textContent = `Jumlah: ${cartTotal.textContent}`;
+                        document.getElementById('qris-amount').textContent = `Jumlah: ${paymentTotal.textContent}`;
                     }
                     
-                    // Show confirm payment button
+                    // Always show confirm payment button when payment method is selected
                     confirmPaymentButton.classList.remove('hidden');
                 });
             });
@@ -884,7 +883,7 @@
             // Reset delivery selection
             deliveryMethods.forEach(m => m.classList.remove('selected'));
             pickupInfo.classList.add('hidden');
-            confirmDeliveryButton.classList.add('hidden');
+            confirmDeliveryButton.classList.remove('hidden');
             selectedDeliveryMethod = null;
         }
 
